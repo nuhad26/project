@@ -1,0 +1,165 @@
+{% extends 'STAFF/index.html' %}
+
+{% block body %}
+  <!-- Custom styles for this page only -->
+  <style>
+    body {
+      background-color: #f0f5ff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+    }
+
+    .custom-container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(13, 71, 161, 0.15);
+      border-top: 5px solid #1976d2;
+    }
+
+    .page-title {
+      color: #0d47a1;
+      text-align: center;
+      margin-bottom: 25px;
+      font-weight: 600;
+      font-size: 28px;
+    }
+
+    .blue-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(13, 71, 161, 0.1);
+    }
+
+    .blue-table thead {
+      background: linear-gradient(135deg, #1976d2, #0d47a1);
+    }
+
+    .blue-table th {
+      color: white;
+      padding: 15px;
+      text-align: left;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      border: none;
+    }
+
+    .blue-table td {
+      padding: 14px 15px;
+      vertical-align: middle;
+      border-top: 1px solid #e3f2fd;
+      color: #0d47a1;
+    }
+
+    .blue-table tbody tr:nth-child(odd) {
+      background-color: #f5f9ff;
+    }
+
+    .blue-table tbody tr:nth-child(even) {
+      background-color: #e3f2fd;
+    }
+
+    .blue-table tbody tr:hover {
+      background-color: #bbdefb;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-blue {
+      background: linear-gradient(135deg, #1976d2, #0d47a1);
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(13, 71, 161, 0.2);
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-blue:hover {
+      background: linear-gradient(135deg, #1565c0, #0a3d91);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(13, 71, 161, 0.3);
+      color: white;
+      text-decoration: none;
+    }
+
+    .status-badge {
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    .status-pending {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+
+    .status-approved {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .status-rejected {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+
+    .table-header-actions {
+      text-align: right;
+    }
+
+    .no-data-message {
+      text-align: center;
+      padding: 20px;
+      color: #6c757d;
+      font-style: italic;
+    }
+  </style>
+
+  <div class="custom-container">
+    <h2 class="page-title">Leave Request Management</h2>
+
+    <form id="form1" name="form1" method="post" action="">
+      <div class="table-responsive">
+        <table class="blue-table">
+          <thead>
+            <tr>
+              <th width="40%">Staff</th>
+              <th width="40%">Reason</th>
+              <th width="25%">Date</th>
+              <th width="15%" class="table-header-actions">
+{#                <a href="/send_leave_request" class="btn-blue">New Request</a>#}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in data %}
+              <tr>
+                <td>{{ i.STAFF.staffname }}</td>
+                <td>{{ i.reason }}</td>
+                <td>{{ i.date }}</td>
+
+                <td></td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="4" class="no-data-message">No leave  found. Click  to create one.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </form>
+  </div>
+{% endblock %}

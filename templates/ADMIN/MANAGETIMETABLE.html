@@ -1,0 +1,173 @@
+{% extends 'ADMIN/index.html' %}
+{% block body %}
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>Manage Timetable</title>
+
+  <!-- Improved styles with light-orange theme -->
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff5eb;
+      padding: 30px;
+      color: #333;
+    }
+
+    .table-container {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(255, 152, 0, 0.15);
+      border-top: 5px solid #ff9800;
+    }
+
+    .page-title {
+      text-align: center;
+      color: #e65100;
+      margin-bottom: 25px;
+      font-size: 28px;
+      position: relative;
+    }
+
+    .page-title::after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 4px;
+      background-color: #ff9800;
+      margin: 10px auto;
+      border-radius: 2px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+
+    th, td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid #ffe0b2;
+    }
+
+    th {
+      background-color: #ff9800;
+      color: white;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+
+    tr:hover {
+      background-color: #fff8e1;
+    }
+
+    td a {
+      color: #e65100;
+      text-decoration: none;
+      padding: 8px 16px;
+      border: 2px solid #ff9800;
+      border-radius: 30px;
+      display: inline-block;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      margin: 4px 0;
+    }
+
+    td a:hover {
+      background-color: #ff9800;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(255, 152, 0, 0.2);
+    }
+
+    td a.delete {
+      color: #d84315;
+      border-color: #d84315;
+    }
+
+    td a.delete:hover {
+      background-color: #d84315;
+      color: white;
+    }
+
+    td a.edit {
+      color: #0288d1;
+      border-color: #0288d1;
+    }
+
+    td a.edit:hover {
+      background-color: #0288d1;
+      color: white;
+    }
+
+    .add-link {
+      display: inline-block;
+      margin-top: 25px;
+      padding: 12px 25px;
+      background-color: #ff9800;
+      color: white;
+      border-radius: 30px;
+      text-decoration: none;
+      text-align: center;
+      font-weight: bold;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      box-shadow: 0 4px 10px rgba(255, 152, 0, 0.3);
+    }
+
+    .add-link:hover {
+      background-color: #e65100;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 14px rgba(255, 152, 0, 0.4);
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="table-container">
+  <h2 class="page-title">Timetable Management</h2>
+  <form id="form1" name="form1" method="post" action="/edit_timetable_post">
+    <table>
+      <thead>
+        <tr>
+          <th>S.NO</th>
+          <th>HOUR</th>
+          <th>DAY</th>
+          <th>SUBJECT</th>
+          <th>ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in sub %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ i.hour }}</td>
+          <td>{{ i.day }}</td>
+          <td>{{ i.SUBJECT.subjectname }}</td>
+          <td>
+            <a href="/edit_timetable/{{ i.id }}" class="edit">EDIT</a>
+            <a href="/delete_timetable/{{ i.id }}" class="delete">DELETE</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <!-- Add Timetable Link -->
+    <div align="center">
+      <a href="/add_timetable" class="add-link">Add Timetable</a>
+    </div>
+  </form>
+</div>
+
+</body>
+
+{% endblock %}

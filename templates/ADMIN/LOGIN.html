@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>Login - Panel</title>
+    <style>
+        body {
+            font-family: 'Circular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background-color: #121212;
+            color: white;
+        }
+
+        .background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #1DB954, #1E68F6);
+            opacity: 0.2;
+            animation: rotate 20s linear infinite;
+        }
+
+        .circle-1 {
+            width: 600px;
+            height: 600px;
+            top: -150px;
+            left: -150px;
+        }
+
+        .circle-2 {
+            width: 800px;
+            height: 800px;
+            bottom: -200px;
+            right: -200px;
+            animation-duration: 25s;
+            animation-direction: reverse;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg) translateX(50px) rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg) translateX(50px) rotate(-360deg);
+            }
+        }
+
+        .login-container {
+            background: rgba(30, 30, 30, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            padding: 40px;
+            width: 350px;
+            z-index: 1;
+            position: relative;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h2 {
+            color: white;
+            margin: 0;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 10px 0;
+            font-size: 14px;
+            color: #b3b3b3;
+            pointer-events: none;
+            transition: 0.3s;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 0;
+            font-size: 16px;
+            color: white;
+            border: none;
+            border-bottom: 1px solid #535353;
+            outline: none;
+            background: transparent;
+        }
+
+        .form-control:focus ~ label,
+        .form-control:valid ~ label {
+            top: -20px;
+            left: 0;
+            color: #1E68F6;
+            font-size: 12px;
+        }
+
+        .form-control:focus ~ .bar:before {
+            width: 100%;
+        }
+
+        .bar {
+            position: relative;
+            display: block;
+            width: 100%;
+        }
+
+        .bar:before {
+            content: '';
+            height: 2px;
+            width: 0;
+            bottom: 0;
+            position: absolute;
+            background: #1E68F6;
+            transition: 0.3s;
+        }
+
+        .btn-login {
+            width: 100%;
+            background: #1E68F6;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            padding: 15px;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            letter-spacing: 2px;
+        }
+
+        .btn-login:hover {
+            background: #4687FA;
+            box-shadow: 0 8px 20px rgba(30, 104, 246, 0.3);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-animation">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+    </div>
+
+    <div class="login-container">
+        <div class="login-header">
+            <h2>LOGIN</h2>
+        </div>
+        <form id="form1" name="form1" method="post" action="/login_post">
+            <div class="form-group">
+                <input type="text" id="username" name="textfield" class="form-control" required />
+                <label for="username">USERNAME</label>
+                <span class="bar"></span>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" name="textfield2" class="form-control" required />
+                <label for="password">PASSWORD</label>
+                <span class="bar"></span>
+            </div>
+            <button type="submit" name="Submit" class="btn-login">LOGIN</button>
+        </form>
+    </div>
+</body>
+</html>

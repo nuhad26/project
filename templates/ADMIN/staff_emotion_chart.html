@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Emotion Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h2>Staff Emotion Feedback Chart</h2>
+    <canvas id="emotionChart"></canvas>
+
+    <script>
+        var ctx = document.getElementById('emotionChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {{ emotions|safe }},  // Emotion labels
+                datasets: [{
+                    label: 'Percentage of Each Emotion',
+                    data: {{ percentage_counts|safe }},  // Emotion percentages
+                    backgroundColor: ['red', 'blue', 'green', 'purple', 'orange'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,  // Since it's percentage-based
+                        ticks: {
+                            callback: function(value) {
+                                return value + "%";  // Show as percentage
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

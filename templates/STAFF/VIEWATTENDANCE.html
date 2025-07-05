@@ -1,0 +1,193 @@
+{#{% extends 'STAFF/index.html' %}#}
+{##}
+{#{% block body %}#}
+{#  <body>#}
+{#    <div class="container mt-5">#}
+{#      <h2 class="text-center mb-4">Student Attendance Management</h2>#}
+{##}
+{#      <form id="form1" name="form1" method="post" action="">#}
+{#        <div class="table-responsive">#}
+{#          <table class="table table-bordered table-striped">#}
+{#            <thead>#}
+{#              <tr>#}
+{#                <th>COURSE</th>#}
+{#                <th>SEM</th>#}
+{#                <th>STUDENT ID</th>#}
+{#                <th>ATTENDANCE</th>#}
+{#              </tr>#}
+{#            </thead>#}
+{#            <tbody>#}
+{#              {% for i in data %}#}
+{#                <tr>#}
+{#                  <td>{{ i.STUDENT.COURSE.coursename }}</td>#}
+{#                  <td>{{ i.sem }}</td>#}
+{#                  <td>{{ i.STUDENT.studentname }}</td>#}
+{#                  <td>{{ i.attendance }}</td>#}
+{#                </tr>#}
+{#              {% endfor %}#}
+{#            </tbody>#}
+{#          </table>#}
+{#        </div>#}
+{#      </form>#}
+{#    </div>#}
+{#  </body>#}
+{#{% endblock %}#}
+
+
+{% extends 'STAFF/index.html' %}
+
+{% block body %}
+  <!-- Custom styles for this page only -->
+  <style>
+    body {
+      background-color: #f0f5ff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+    }
+
+    .custom-container {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(13, 71, 161, 0.15);
+      border-top: 5px solid #1976d2;
+    }
+
+    .page-title {
+      color: #0d47a1;
+      text-align: center;
+      margin-bottom: 25px;
+      font-weight: 600;
+      font-size: 28px;
+    }
+
+    .blue-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(13, 71, 161, 0.1);
+    }
+
+    .blue-table thead {
+      background: linear-gradient(135deg, #1976d2, #0d47a1);
+    }
+
+    .blue-table th {
+      color: white;
+      padding: 15px;
+      text-align: left;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      border: none;
+    }
+
+    .blue-table td {
+      padding: 14px 15px;
+      vertical-align: middle;
+      border-top: 1px solid #e3f2fd;
+      color: #0d47a1;
+      font-size: 15px;
+    }
+
+    .blue-table tbody tr:nth-child(odd) {
+      background-color: #f5f9ff;
+    }
+
+    .blue-table tbody tr:nth-child(even) {
+      background-color: #e3f2fd;
+    }
+
+    .blue-table tbody tr:hover {
+      background-color: #bbdefb;
+      transition: background-color 0.3s ease;
+    }
+
+    .attendance-badge {
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    .attendance-high {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .attendance-medium {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+
+    .attendance-low {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+
+    .sem-badge {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      text-align: center;
+      background-color: #1976d2;
+      color: white;
+      border-radius: 50%;
+      font-weight: bold;
+      font-size: 12px;
+    }
+
+    .no-data-message {
+      text-align: center;
+      padding: 20px;
+      color: #6c757d;
+      font-style: italic;
+    }
+  </style>
+
+  <div class="custom-container">
+    <h2 class="page-title">Student Attendance Management</h2>
+
+    <form id="form1" name="form1" method="post" action="">
+      <div class="table-responsive">
+        <table class="blue-table">
+          <thead>
+            <tr>
+              <th width="25%">Course</th>
+              <th width="15%">Semester</th>
+              <th width="35%">Student Name</th>
+              <th width="25%">Attendance</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in data %}
+              <tr>
+                <td>{{ i.STUDENT.COURSE.coursename }}</td>
+                <td><span class="sem-badge">{{ i.sem }}</span></td>
+                <td>{{ i.STUDENT.studentname }}</td>
+                <td>
+                  {% if i.attendance|floatformat:0 >= 75 %}
+                    <span class="attendance-badge attendance-high">{{ i.attendance }}%</span>
+                  {% elif i.attendance|floatformat:0 >= 60 %}
+                    <span class="attendance-badge attendance-medium">{{ i.attendance }}%</span>
+                  {% else %}
+                    <span class="attendance-badge attendance-low">{{ i.attendance }}%</span>
+                  {% endif %}
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="4" class="no-data-message">No attendance records found.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </form>
+  </div>
+{% endblock %}

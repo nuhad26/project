@@ -1,0 +1,236 @@
+{% extends 'ADMIN/index.html' %}
+
+{% block body %}
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>Add Student</title>
+
+    <!-- Styling improvements -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fff3e0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 70%;
+            margin: 50px auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #e65100;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ffe0b2;
+        }
+
+        input[type="text"], input[type="file"], input[type="date"], select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ffcc80;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #e65100;
+            background-color: #fff3e0;
+        }
+
+        input[type="text"]:focus, input[type="file"]:focus, input[type="date"]:focus, select:focus {
+            border-color: #ff9800;
+            outline: none;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        input[type="submit"] {
+            background-color: #ff9800;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #f57c00;
+        }
+
+        .form-section {
+            margin-bottom: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Add Student</h2>
+        <form action="/Admin_add_student_post" method="post" enctype="multipart/form-data" name="form1" id="form1">
+            <table>
+                <!-- Department Selection -->
+                <tr class="form-section">
+                    <td>Department</td>
+                    <td>
+                        <select name="dep" id="dep" required>
+                            {% for i in data %}
+                                <option value="{{ i.id }}">{{ i.departmentname }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+
+                <!-- Course Selection -->
+                <tr class="form-section">
+                    <td>Course</td>
+                    <td>
+                        <select name="crs" id="crs" required>
+                            <!-- Courses will be populated here dynamically -->
+                        </select>
+                    </td>
+                </tr>
+
+                <!-- Student Name -->
+                <tr class="form-section">
+                    <td>Student Name</td>
+                    <td><input type="text" name="textfield" required /></td>
+                </tr>
+
+                <!-- Phone Number -->
+                <tr class="form-section">
+                    <td>Phone Number</td>
+                    <td><input type="text" name="textfield2" required /></td>
+                </tr>
+
+                <!-- Date of Birth -->
+                <tr class="form-section">
+                    <td>Date of Birth</td>
+                    <td><input type="date" name="textfield3" required /></td>
+                </tr>
+
+                <!-- Gender -->
+                <tr class="form-section">
+                    <td>Gender</td>
+                    <td>
+                        <input name="radiobutton" type="radio" value="MALE" required /> Male
+                        <input name="radiobutton" type="radio" value="FEMALE" required /> Female
+                    </td>
+                </tr>
+
+                <!-- Place -->
+                <tr class="form-section">
+                    <td>Place</td>
+                    <td><input type="text" name="textfield5" required /></td>
+                </tr>
+
+                <!-- Post -->
+                <tr class="form-section">
+                    <td>Post</td>
+                    <td><input type="text" name="textfield6" required /></td>
+                </tr>
+
+                <!-- PIN -->
+                <tr class="form-section">
+                    <td>PIN</td>
+                    <td><input type="text" name="textfield7" required /></td>
+                </tr>
+
+                <!-- Email -->
+                <tr class="form-section">
+                    <td>Email</td>
+                    <td><input type="text" name="textfield72" required /></td>
+                </tr>
+
+                <!-- Username -->
+                <tr class="form-section">
+                    <td>Username</td>
+                    <td><input type="text" name="textfield73" required /></td>
+                </tr>
+
+                <!-- Password -->
+                <tr class="form-section">
+                    <td>Password</td>
+                    <td><input type="text" name="textfield8" required /></td>
+                </tr>
+
+                <!-- Image -->
+                <tr class="form-section">
+                    <td>Image</td>
+                    <td><input type="file" name="file" /></td>
+                </tr>
+
+                <!-- Submit Button -->
+                <tr>
+                    <td colspan="2">
+                        <div align="center">
+                            <input name="Add" type="submit" id="Add" value="Add" />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script type="text/javascript">
+    $("#dep").change(function() {
+        var sd = $(this).val();
+        $.ajax({
+            type: "GET",
+            url: "/searchcrs",
+            data: {
+                dep: sd,
+            },
+            success: function(data) {
+                var tab;
+                tab = '<option>Select</option>';
+                for (var i = 0, l = data.res.length; i < l; i++) {
+                    tab = tab + '<option value="' + data.res[i].id + '">' + data.res[i].course + '</option>';
+                }
+
+                $('#crs').empty();
+                $('#crs').append(tab);
+            }
+        });
+    });
+</script>
+
+{% endblock %}

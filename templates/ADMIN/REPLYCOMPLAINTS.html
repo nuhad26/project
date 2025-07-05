@@ -1,0 +1,207 @@
+{#{% extends 'ADMIN/index.html' %}#}
+{#{% block body %}#}
+{#<head>#}
+{#  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />#}
+{#  <title>Send Reply</title>#}
+{##}
+{#  <!-- Styling to enhance the form appearance -->#}
+{#  <style>#}
+{#    body {#}
+{#      font-family: Arial, sans-serif;#}
+{#      background-color: #f4f7fa;#}
+{#      padding: 30px;#}
+{#    }#}
+{##}
+{#    .form-container {#}
+{#      max-width: 600px;#}
+{#      margin: 0 auto;#}
+{#      background-color: #fff;#}
+{#      padding: 20px;#}
+{#      border-radius: 8px;#}
+{#      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);#}
+{#    }#}
+{##}
+{#    table {#}
+{#      width: 100%;#}
+{#      border-collapse: collapse;#}
+{#    }#}
+{##}
+{#    td {#}
+{#      padding: 12px;#}
+{#      text-align: left;#}
+{#      vertical-align: middle;#}
+{#    }#}
+{##}
+{#    textarea {#}
+{#      width: 100%;#}
+{#      height: 120px;#}
+{#      padding: 10px;#}
+{#      border: 1px solid #ddd;#}
+{#      border-radius: 4px;#}
+{#      font-size: 14px;#}
+{#    }#}
+{##}
+{#    textarea:focus {#}
+{#      border-color: #007bff;#}
+{#      outline: none;#}
+{#    }#}
+{##}
+{#    input[type="submit"] {#}
+{#      background-color: #007bff;#}
+{#      color: white;#}
+{#      padding: 10px 20px;#}
+{#      border: none;#}
+{#      border-radius: 4px;#}
+{#      font-size: 16px;#}
+{#      cursor: pointer;#}
+{#      width: 100%;#}
+{#      margin-top: 20px;#}
+{#    }#}
+{##}
+{#    input[type="submit"]:hover {#}
+{#      background-color: #0056b3;#}
+{#    }#}
+{##}
+{#    input[type="submit"]:focus {#}
+{#      outline: none;#}
+{#    }#}
+{#  </style>#}
+{#</head>#}
+{##}
+{#<body>#}
+{##}
+{#  <div class="form-container">#}
+{#    <form id="form1" name="form1" method="post" action="/send_reply_post">#}
+{#      <table>#}
+{#        <tr>#}
+{#          <td><strong>REPLY</strong></td>#}
+{#          <td>#}
+{#            <label>#}
+{#              <textarea name="textarea" placeholder="Type your reply here..."></textarea>#}
+{#            </label>#}
+{#          </td>#}
+{#        </tr>#}
+{#        <tr>#}
+{#          <td colspan="2" style="text-align: center;">#}
+{#            <input type="submit" name="Submit" value="SEND" />#}
+{#          </td>#}
+{#        </tr>#}
+{#      </table>#}
+{#    </form>#}
+{#  </div>#}
+{##}
+{#</body>#}
+{#{% endblock %}#}
+{% extends 'ADMIN/index.html' %}
+
+{% block body %}
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>Send Reply</title>
+
+  <!-- Styling to enhance the form appearance -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7; /* Light background color */
+      padding: 30px;
+    }
+
+    .form-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff; /* White background */
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); /* Soft shadow */
+      border: 1px solid #f0f0f0; /* Subtle border */
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    td {
+      padding: 12px;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    textarea {
+      width: 100%;
+      height: 120px;
+      padding: 12px;
+      border: 1px solid #ddd; /* Light gray border */
+      border-radius: 8px;
+      font-size: 14px;
+      background-color: #fafafa; /* Light background for textarea */
+      color: #333; /* Dark text for readability */
+    }
+
+    textarea:focus {
+      border-color: #ffb84d; /* Soft orange focus color */
+      outline: none;
+      background-color: #fff; /* White background when focused */
+    }
+
+    input[type="submit"] {
+      background-color: #ffb84d; /* Soft orange color */
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 20px;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #ff9f00; /* Darker orange on hover */
+      transform: translateY(-2px);
+    }
+
+    input[type="submit"]:focus {
+      outline: none;
+      background-color: #ff9f00;
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+      body {
+        padding: 15px;
+      }
+
+      .form-container {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="form-container">
+    <form id="form1" name="form1" method="post" action="/send_reply_post">
+      <table>
+        <tr>
+          <td><strong>REPLY</strong></td>
+          <td>
+            <label>
+              <textarea name="textarea" placeholder="Type your reply here..."></textarea>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" style="text-align: center;">
+            <input type="submit" name="Submit" value="SEND" />
+          </td>
+        </tr>
+      </table>
+    </form>
+  </div>
+
+</body>
+{% endblock %}

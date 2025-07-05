@@ -1,0 +1,255 @@
+{% extends 'ADMIN/index.html' %}
+{% block body %}
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>Edit Student</title>
+
+  <!-- Additional CSS to style the form and improve user experience -->
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff3e0;
+      padding: 50px 20px;
+    }
+
+    .form-container {
+      width: 80%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 30px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container table {
+      width: 100%;
+      margin: 20px 0;
+      border-collapse: collapse;
+    }
+
+    .form-container td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ffe0b2;
+    }
+
+    .form-container th {
+      background-color: #ff9800;
+      color: white;
+      padding: 12px;
+      text-align: left;
+    }
+
+    .form-container input[type="text"],
+    .form-container select,
+    .form-container input[type="file"],
+    .form-container input[type="date"],
+    .form-container input[type="radio"] {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 6px;
+      border: 1px solid #ffcc80;
+      font-size: 14px;
+      color: #e65100;
+      background-color: #fff3e0;
+    }
+
+    .form-container input[type="text"]:focus,
+    .form-container select:focus,
+    .form-container input[type="file"]:focus,
+    .form-container input[type="date"]:focus {
+      border-color: #ff9800;
+      outline: none;
+    }
+
+    .form-container input[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      background-color: #ff9800;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .form-container input[type="submit"]:hover {
+      background-color: #f57c00;
+    }
+
+    .form-container img {
+      margin-top: 10px;
+      max-width: 200px;
+      max-height: 200px;
+      border-radius: 6px;
+      border: 2px solid #ffcc80;
+    }
+
+    .error-message {
+      color: #ff5722;
+      text-align: center;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .success-message {
+      color: #4caf50;
+      text-align: center;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .form-container label {
+      font-size: 14px;
+      color: #e65100;
+    }
+
+    .form-container input[type="radio"] {
+      width: auto;
+      margin-right: 10px;
+    }
+
+    /* Make the form responsive */
+    @media (max-width: 600px) {
+      .form-container {
+        width: 100%;
+        padding: 15px;
+      }
+
+      .form-container td {
+        padding: 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="form-container">
+  <!-- Display any messages here -->
+  <div id="message" class="error-message"></div>
+
+  <form id="form1" name="form1" method="post" action="/edit_student_post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table width="100%" border="1">
+
+      <tr>
+        <td>DEPARTMENT</td>
+        <td>
+          <select name="dep" id="dep" required>
+            {% for i in data %}
+              <option value="{{ i.id }}" {% if i.id == stnd.COURSE.DEPARTMENT.id %} selected {% endif %}>
+                {{ i.departmentname }}
+              </option>
+            {% endfor %}
+          </select>
+        </td>
+      </tr>
+
+      <tr>
+        <td>COURSE</td>
+        <td><select name="select" id="crs" required></select></td>
+      </tr>
+
+      <tr>
+        <td>STUDENT NAME</td>
+        <td><input type="text" name="textfield" value="{{ stnd.studentname }}" required /></td>
+      </tr>
+
+      <tr>
+        <td>PHONE NUMBER</td>
+        <td><input type="text" name="textfield2" value="{{ stnd.phonenumber }}" required /></td>
+      </tr>
+
+      <tr>
+        <td>DOB</td>
+        <td><input type="date" name="textfield3" value="{{ stnd.dob }}" required /></td>
+      </tr>
+
+      <tr>
+        <td>GENDER</td>
+        <td>
+          <label>
+            <input name="radiobutton" type="radio" value="MALE" {% if stnd.gender == 'MALE' %} checked {% endif %}/> MALE
+            <input name="radiobutton" type="radio" value="FEMALE" {% if stnd.gender == 'FEMALE' %} checked {% endif %}/> FEMALE
+          </label>
+        </td>
+      </tr>
+
+      <tr>
+        <td>PLACE</td>
+        <td><input type="text" name="textfield5" value="{{ stnd.place }}" required /></td>
+      </tr>
+
+      <tr>
+        <td>POST</td>
+        <td><input type="text" name="textfield6" value="{{ stnd.post }}" required /></td>
+      </tr>
+
+      <tr>
+        <td>PIN</td>
+        <td><input type="text" name="textfield7" value="{{ stnd.pin }}" required /></td>
+      </tr>
+
+      <tr>
+        <td>EMAIL</td>
+        <td><input type="text" name="textfield72" value="{{ stnd.email }}" required /></td>
+      </tr>
+
+      <tr>
+        <td>IMAGE</td>
+        <td>
+          <input type="file" name="file" id="imageInput" />
+          <img src="{{ stnd.image }}" alt="Student Image" id="imagePreview" width="200px" height="200px" />
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2">
+          <div align="center">
+            <input name="Update" type="submit" id="Update" value="Update" />
+          </div>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+
+<!-- JavaScript for AJAX and Image Preview -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+<script type="text/javascript">
+  // AJAX to dynamically load courses based on department
+  $("#dep").change(function(){
+    var depId = $(this).val();
+    $.ajax({
+      type: "GET",
+      url: "/searchcrs",
+      data: { dep: depId },
+      success: function(data) {
+        var options = '<option>Select</option>';
+        for (var i = 0, l = data.res.length; i < l; i++) {
+          options += '<option value="'+data.res[i].id+'">'+data.res[i].course+'</option>';
+        }
+        $('#crs').empty();
+        $('#crs').append(options);
+      }
+    });
+  });
+
+  // Image preview function
+  $("#imageInput").change(function(event) {
+    var reader = new FileReader();
+    reader.onload = function() {
+      $('#imagePreview').attr('src', reader.result);
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  });
+</script>
+
+</body>
+{% endblock %}

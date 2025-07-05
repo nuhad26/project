@@ -1,0 +1,159 @@
+{% extends 'ADMIN/index.html' %}
+{% block body %}
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>Student List</title>
+
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background-color: #fff5e6;
+      margin: 0;
+      padding: 30px;
+    }
+
+    .table-container {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, #ffe0b2, #ffcc80);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(239, 108, 0, 0.15);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(255, 152, 0, 0.15);
+    }
+
+    th, td {
+      padding: 16px;
+      text-align: left;
+      border-bottom: 2px solid #fff3e0;
+    }
+
+    th {
+      background-color: #ff9800;
+      color: white;
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+
+    tr:hover {
+      background-color: #fff8e1;
+    }
+
+    td a {
+      text-decoration: none;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 6px;
+      margin-right: 10px;
+      transition: all 0.3s ease;
+      display: inline-block;
+      margin-bottom: 5px;
+    }
+
+    td a:first-child {
+      background-color: #fb8c00;
+      color: white;
+      border: 1px solid #fb8c00;
+    }
+
+    td a:first-child:hover {
+      background-color: #ef6c00;
+      border-color: #ef6c00;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(251, 140, 0, 0.3);
+    }
+
+    td a.delete {
+      background-color: #e53935;
+      color: white;
+      border: 1px solid #e53935;
+    }
+
+    td a.delete:hover {
+      background-color: #c62828;
+      border-color: #c62828;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(229, 57, 53, 0.3);
+    }
+
+    .add-link {
+      display: inline-block;
+      margin-top: 25px;
+      padding: 12px 24px;
+      background-color: #f57c00;
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(245, 124, 0, 0.3);
+    }
+
+    .add-link:hover {
+      background-color: #e65100;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(230, 81, 0, 0.4);
+    }
+
+    .table-container h2 {
+      text-align: center;
+      color: #e65100;
+      margin-bottom: 25px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+      font-size: 28px;
+    }
+
+    td p {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="table-container">
+    <h2>Student List</h2>
+    <form id="form1" name="form1" method="post" action="edit_student_post">
+      <table>
+        <thead>
+          <tr>
+            <th>S.NO</th>
+            <th>STUDENT NAME</th>
+            <th>ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in data %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ i.studentname }}</td>
+            <td>
+              <p><a href="/edit_student/{{ i.id }}">EDIT</a></p>
+              <p><a href="/delete_student/{{ i.id }}" class="delete">DELETE</a></p>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div align="center">
+        <a href="/Admin_add_student" class="add-link">ADD STUDENT</a>
+      </div>
+    </form>
+  </div>
+</body>
+
+{% endblock %}

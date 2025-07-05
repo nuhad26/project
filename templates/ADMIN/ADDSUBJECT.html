@@ -1,0 +1,226 @@
+{% extends 'ADMIN/index.html' %}
+{% block body %}
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>Add Subject</title>
+  <!-- Adding styles with light-orange theme -->
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff5eb;
+      padding: 50px 20px;
+      color: #333;
+    }
+
+    .form-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 35px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(255, 152, 0, 0.15);
+      border-top: 5px solid #ff9800;
+    }
+
+    .page-title {
+      text-align: center;
+      color: #e65100;
+      margin-bottom: 25px;
+      font-size: 28px;
+      position: relative;
+    }
+
+    .page-title::after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 4px;
+      background-color: #ff9800;
+      margin: 10px auto;
+      border-radius: 2px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    td {
+      padding: 14px 10px;
+      text-align: left;
+      vertical-align: middle;
+      border-bottom: 1px solid #ffe0b2;
+    }
+
+    td:first-child {
+      font-weight: 600;
+      color: #e65100;
+      width: 30%;
+    }
+
+    select, input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin: 5px 0;
+      border: 2px solid #ffcc80;
+      border-radius: 6px;
+      background-color: #fff8e1;
+      font-family: inherit;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+
+    select:focus, input[type="text"]:focus {
+      border-color: #ff9800;
+      box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.2);
+      outline: none;
+    }
+
+    select:hover, input[type="text"]:hover {
+      border-color: #ff9800;
+    }
+
+    input[type="submit"] {
+      width: 100%;
+      background-color: #ff9800;
+      color: white;
+      border: none;
+      padding: 14px 20px;
+      cursor: pointer;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(255, 152, 0, 0.3);
+      margin-top: 10px;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #e65100;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 14px rgba(255, 152, 0, 0.4);
+    }
+
+    #loading {
+      display: none;
+      font-size: 16px;
+      color: #ff9800;
+      font-weight: bold;
+      margin-top: 15px;
+      text-align: center;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.6; }
+      50% { opacity: 1; }
+      100% { opacity: 0.6; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="form-container">
+    <h2 class="page-title">Add Subject</h2>
+    <form id="form1" name="form1" method="post" enctype="multipart/form-data" action="SubjectPost">
+      <table>
+        <tr>
+          <td>DEPARTMENT</td>
+          <td>
+            <label>
+              <select name="select" id="dep" required>
+                <option value="">Select Department</option>
+                {% for dept in data %}
+                  <option value="{{ dept.id }}">{{ dept.departmentname }}</option>
+                {% endfor %}
+              </select>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>COURSE</td>
+          <td>
+            <select name="crs" id="crs" required>
+              <option value="">Select Course</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>SUBJECT</td>
+          <td><input type="text" name="sub_textfield" required placeholder="Enter Subject Name" /></td>
+        </tr>
+        <tr>
+          <td>SEM</td>
+          <td>
+            <select name="select4" required>
+              <option value="">Select Semester</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" style="border-bottom: none;">
+            <input type="submit" name="Submit" value="Add Subject" />
+          </td>
+        </tr>
+      </table>
+    </form>
+
+    <!-- Loading spinner -->
+    <div id="loading">Loading courses...</div>
+  </div>
+</body>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    // Handle department change
+    $("#dep").change(function() {
+        var departmentId = $(this).val();
+
+        if (departmentId) {
+            // Show loading spinner
+            $('#loading').show();
+
+            // Make AJAX request to fetch courses based on department
+            $.ajax({
+                type: "GET",
+                url: "/searchcrs",
+                data: { dep: departmentId },
+                success: function(data) {
+                    var courseOptions = '<option value="">Select Course</option>';
+                    // Populate the course dropdown
+                    for (var i = 0, l = data.res.length; i < l; i++) {
+                        courseOptions += '<option value="'+data.res[i].id+'">'+data.res[i].course+'</option>';
+                    }
+                    // Update course dropdown
+                    $('#crs').empty().append(courseOptions);
+                },
+                complete: function() {
+                    // Hide loading spinner when request is complete
+                    $('#loading').hide();
+                },
+                error: function() {
+                    alert('Error fetching courses. Please try again.');
+                    $('#loading').hide();
+                }
+            });
+        } else {
+            // Reset course dropdown if no department is selected
+            $('#crs').empty().append('<option value="">Select Course</option>');
+        }
+    });
+});
+</script>
+{% endblock %}

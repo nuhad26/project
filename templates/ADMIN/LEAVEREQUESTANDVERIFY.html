@@ -1,0 +1,134 @@
+{% extends 'ADMIN/index.html' %}
+{% block body %}
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Leave Requests</title>
+
+<!-- Add custom styles to enhance the table and buttons -->
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #fff3e0; /* Light orange background */
+    padding: 30px;
+  }
+
+  .form-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+
+  th, td {
+    padding: 12px;
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: 1px solid #ddd;
+  }
+
+  th {
+    background-color: #ff9800; /* Orange header */
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  tr:hover {
+    background-color: #fff3e0; /* Light orange hover effect */
+  }
+
+  td a {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+  }
+
+  td a:hover {
+    opacity: 0.9;
+  }
+
+  td a.reject {
+    background-color: #ff5252; /* Red for reject */
+  }
+
+  td a.reject:hover {
+    background-color: #ff1744; /* Darker red on hover */
+  }
+
+  td a.accept {
+    background-color: #4caf50; /* Green for accept */
+  }
+
+  td a.accept:hover {
+    background-color: #388e3c; /* Darker green on hover */
+  }
+
+  .status-pending {
+    color: #ff9800; /* Orange for pending status */
+    font-weight: bold;
+  }
+
+  .status-approved {
+    color: #4caf50; /* Green for approved status */
+    font-weight: bold;
+  }
+
+  .status-rejected {
+    color: #ff5252; /* Red for rejected status */
+    font-weight: bold;
+  }
+</style>
+
+</head>
+
+<body>
+
+<div class="form-container">
+  <form id="form1" name="form1" method="post" action="">
+    <table>
+      <thead>
+        <tr>
+          <th>STAFF</th>
+          <th>DEPARTMENT</th>
+          <th>REASON</th>
+          <th>DATE</th>
+          <th>STATUS</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in data %}
+        <tr>
+          <td>{{ i.STAFF.staffname }}</td>
+          <td>{{ i.STAFF.DEPARTMENT.departmentname }}</td>
+          <td>{{ i.reason }}</td>
+          <td>{{ i.date }}</td>
+          <td>
+            {% if i.status == 'pending' %}
+            <p><a href="accept_leave/{{ i.id }}" class="accept">ACCEPT</a></p>
+            <p><a href="reject_leave/{{ i.id }}" class="reject">REJECT</a></p>
+            {% else %}
+            <span class="status-{{ i.status }}">{{ i.status }}</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </form>
+</div>
+
+</body>
+{% endblock %}

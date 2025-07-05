@@ -1,0 +1,345 @@
+{#{% extends 'ADMIN/index.html' %}#}
+{#{% block body %}#}
+{#<head>#}
+{#  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />#}
+{#  <title>Timetable Entry</title>#}
+{#  <!-- Add some styling for a better UI -->#}
+{#  <style>#}
+{#    body {#}
+{#      font-family: Arial, sans-serif;#}
+{#      background-color: #f4f4f4;#}
+{#      padding: 20px;#}
+{#    }#}
+{##}
+{#    .form-container {#}
+{#      max-width: 600px;#}
+{#      margin: 0 auto;#}
+{#      background-color: #fff;#}
+{#      padding: 30px;#}
+{#      border-radius: 8px;#}
+{#      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);#}
+{#    }#}
+{##}
+{#    table {#}
+{#      width: 100%;#}
+{#      margin-bottom: 20px;#}
+{#      border-collapse: collapse;#}
+{#    }#}
+{##}
+{#    td {#}
+{#      padding: 12px;#}
+{#      text-align: left;#}
+{#      vertical-align: middle;#}
+{#      border: 1px solid #ddd;#}
+{#    }#}
+{##}
+{#    th {#}
+{#      background-color: #f2f2f2;#}
+{#      padding: 12px;#}
+{#    }#}
+{##}
+{#    select {#}
+{#      width: 100%;#}
+{#      padding: 8px;#}
+{#      margin: 5px 0;#}
+{#      border: 1px solid #ccc;#}
+{#      border-radius: 4px;#}
+{#    }#}
+{##}
+{#    input[type="submit"] {#}
+{#      width: 100%;#}
+{#      padding: 10px;#}
+{#      background-color: #007bff;#}
+{#      color: white;#}
+{#      border: none;#}
+{#      cursor: pointer;#}
+{#      border-radius: 4px;#}
+{#    }#}
+{##}
+{#    input[type="submit"]:hover {#}
+{#      background-color: #0056b3;#}
+{#    }#}
+{##}
+{#    #loading {#}
+{#      display: none;#}
+{#      font-size: 16px;#}
+{#      color: #007bff;#}
+{#      font-weight: bold;#}
+{#      margin-top: 10px;#}
+{#    }#}
+{#  </style>#}
+{#</head>#}
+{##}
+{#<body>#}
+{#  <div class="form-container">#}
+{#    <form id="form1" name="form1" method="post" action="/add_timetable_post">#}
+{#      <table>#}
+{#        <tr>#}
+{#          <td>HOUR</td>#}
+{#          <td>#}
+{#            <label>#}
+{#              <select name="select" required>#}
+{#                <option value="">Select Hour</option>#}
+{#                <option value="1">1st Hour</option>#}
+{#                <option value="2">2nd Hour</option>#}
+{#                <option value="3">3rd Hour</option>#}
+{#                <option value="4">4th Hour</option>#}
+{#                <option value="5">5th Hour</option>#}
+{#              </select>#}
+{#            </label>#}
+{#          </td>#}
+{#        </tr>#}
+{#        <tr>#}
+{#          <td>DAY</td>#}
+{#          <td>#}
+{#            <select name="DAY" required>#}
+{#              <option value="">Select Day</option>#}
+{#              <option value="MONDAY">Monday</option>#}
+{#              <option value="TUESDAY">Tuesday</option>#}
+{#              <option value="WEDNESDAY">Wednesday</option>#}
+{#              <option value="THURSDAY">Thursday</option>#}
+{#              <option value="FRIDAY">Friday</option>#}
+{#            </select>#}
+{#          </td>#}
+{#        </tr>#}
+{#        <tr>#}
+{#          <td>SUBJECT</td>#}
+{#          <td>#}
+{#            <select name="select3" required>#}
+{#              <option value="">Select Subject</option>#}
+{#              {% for i in sub %}#}
+{#                <option value="{{ i.id }}">{{ i.subjectname }}</option>#}
+{#              {% endfor %}#}
+{#            </select>#}
+{#          </td>#}
+{#        </tr>#}
+{#      <tr>#}
+{#  <td>CLASS</td>#}
+{#  <td>#}
+{#            <input type="text" name="cls" placeholder="Enter Class" />#}
+{#          </td>#}
+{#</tr>#}
+{#        <tr>#}
+{#          <td colspan="2">#}
+{#            <input name="ADD" type="submit" id="ADD" value="ADD" />#}
+{#          </td>#}
+{#        </tr>#}
+{#      </table>#}
+{#    </form>#}
+{##}
+{#    <!-- Loading Spinner -->#}
+{#    <div id="loading">Loading... Please wait.</div>#}
+{#  </div>#}
+{##}
+{#</body>#}
+{#{% endblock %}#}
+{##}
+{#<!-- Adding jQuery to handle form validation and showing loading spinner -->#}
+{#<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>#}
+{#<script type="text/javascript">#}
+{#$(document).ready(function() {#}
+{#    // Show loading spinner when form is submitted#}
+{#    $('#form1').submit(function(event) {#}
+{#        $('#loading').show();#}
+{##}
+{#        // Simple form validation#}
+{#        var isValid = true;#}
+{#        $('select[required]').each(function() {#}
+{#            if ($(this).val() === "") {#}
+{#                isValid = false;#}
+{#            }#}
+{#        });#}
+{##}
+{#        // If validation fails, prevent form submission and show error message#}
+{#        if (!isValid) {#}
+{#            alert("Please fill out all required fields.");#}
+{#            $('#loading').hide();#}
+{#            event.preventDefault(); // Prevent form submission if validation fails#}
+{#        }#}
+{#    });#}
+{#});#}
+{#</script>#}
+
+{% extends 'ADMIN/index.html' %}
+{% block body %}
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>Timetable Entry</title>
+  <!-- Add some styling for a better UI -->
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff3e0;
+      padding: 20px;
+    }
+
+    .form-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+      width: 100%;
+      margin-bottom: 20px;
+      border-collapse: collapse;
+    }
+
+    td {
+      padding: 12px;
+      text-align: left;
+      vertical-align: middle;
+      border: 1px solid #ffe0b2;
+    }
+
+    th {
+      background-color: #ffe0b2;
+      padding: 12px;
+      color: #e65100;
+      font-weight: bold;
+    }
+
+    select, input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border: 1px solid #ffcc80;
+      border-radius: 6px;
+      font-size: 14px;
+      color: #e65100;
+      background-color: #fff3e0;
+    }
+
+    select:focus, input[type="text"]:focus {
+      border-color: #ff9800;
+      outline: none;
+    }
+
+    input[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      background-color: #ff9800;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #f57c00;
+    }
+
+    #loading {
+      display: none;
+      font-size: 16px;
+      color: #ff9800;
+      font-weight: bold;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .form-container h2 {
+      text-align: center;
+      color: #e65100;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="form-container">
+    <h2>Timetable Entry</h2>
+    <form id="form1" name="form1" method="post" action="/add_timetable_post">
+      <table>
+        <tr>
+          <td>HOUR</td>
+          <td>
+            <label>
+              <select name="select" required>
+                <option value="">Select Hour</option>
+                <option value="1">1st Hour</option>
+                <option value="2">2nd Hour</option>
+                <option value="3">3rd Hour</option>
+                <option value="4">4th Hour</option>
+                <option value="5">5th Hour</option>
+              </select>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>DAY</td>
+          <td>
+            <select name="DAY" required>
+              <option value="">Select Day</option>
+              <option value="MONDAY">Monday</option>
+              <option value="TUESDAY">Tuesday</option>
+              <option value="WEDNESDAY">Wednesday</option>
+              <option value="THURSDAY">Thursday</option>
+              <option value="FRIDAY">Friday</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>SUBJECT</td>
+          <td>
+            <select name="select3" required>
+              <option value="">Select Subject</option>
+              {% for i in sub %}
+                <option value="{{ i.id }}">{{ i.subjectname }}</option>
+              {% endfor %}
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>CLASS</td>
+          <td>
+            <input type="text" name="cls" placeholder="Enter Class" />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <input name="ADD" type="submit" id="ADD" value="ADD" />
+          </td>
+        </tr>
+      </table>
+    </form>
+
+    <!-- Loading Spinner -->
+    <div id="loading">Loading... Please wait.</div>
+  </div>
+
+</body>
+{% endblock %}
+
+<!-- Adding jQuery to handle form validation and showing loading spinner -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    // Show loading spinner when form is submitted
+    $('#form1').submit(function(event) {
+        $('#loading').show();
+
+        // Simple form validation
+        var isValid = true;
+        $('select[required]').each(function() {
+            if ($(this).val() === "") {
+                isValid = false;
+            }
+        });
+
+        // If validation fails, prevent form submission and show error message
+        if (!isValid) {
+            alert("Please fill out all required fields.");
+            $('#loading').hide();
+            event.preventDefault(); // Prevent form submission if validation fails
+        }
+    });
+});
+</script>

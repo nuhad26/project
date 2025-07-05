@@ -1,0 +1,91 @@
+{% extends 'ADMIN/index.html' %}
+{% block body %}
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>Emotion Records</title>
+
+  <!-- Adding styles to improve the layout -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      padding: 30px;
+    }
+
+    .emotion-table-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    td, th {
+      padding: 12px;
+      text-align: left;
+      vertical-align: middle;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .emotion-column {
+      width: 100px;
+      text-align: center;
+    }
+
+    .highlight {
+      font-weight: bold;
+      color: #007bff;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="emotion-table-container">
+    <form id="form1" name="form1" method="post" action="/view_feedback_search">
+      <table>
+        <thead>
+         <label>
+            <select name="select2" id="staff-select" required>
+              <option value="">Select Staff</option>
+              {% for i in staff %}
+                <option value="{{ i.id }}">{{ i.staffname }}</option>
+              {% endfor %}
+            </select>
+          <div class="center-text">
+                <input type="submit" name="Select" value="Select" />
+            </div>
+          </label>
+          <tr>
+{#            <th>NAME</th>#}
+            <th>DEPARTMENT</th>
+            <th>EMOTION</th>
+            <th>DATE</th>
+            <th>STAFF</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in data %}
+          <tr>
+{#            <td>{{ i.STUDENT.studentname }}</td>#}
+            <td>{{ i.STAFF.DEPARTMENT.departmentname }}</td>
+            <td class="emotion-column">{{ i.emotion }}</td>
+            <td>{{ i.date }}</td>
+            <td>{{ i.STAFF.staffname }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </form>
+  </div>
+</body>
+{% endblock %}

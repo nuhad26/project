@@ -1,0 +1,480 @@
+{#{% extends 'ADMIN/index.html' %}#}
+{##}
+{#{% block body %}#}
+{#<head>#}
+{#    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />#}
+{#    <title>Add Staff</title>#}
+{##}
+{#    <!-- Adding some basic styles to improve design -->#}
+{#    <style>#}
+{#        body {#}
+{#            font-family: Arial, sans-serif;#}
+{#            background-color: #f4f4f4;#}
+{#            margin: 0;#}
+{#            padding: 0;#}
+{#        }#}
+{##}
+{#        .container {#}
+{#            width: 60%;#}
+{#            margin: 50px auto;#}
+{#            background-color: white;#}
+{#            padding: 20px;#}
+{#            border-radius: 8px;#}
+{#            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);#}
+{#        }#}
+{##}
+{#        h2 {#}
+{#            text-align: center;#}
+{#            color: #333;#}
+{#        }#}
+{##}
+{#        table {#}
+{#            width: 100%;#}
+{#            border-collapse: collapse;#}
+{#        }#}
+{##}
+{#        td {#}
+{#            padding: 12px;#}
+{#            text-align: left;#}
+{#        }#}
+{##}
+{#        input[type="text"], input[type="file"], select {#}
+{#            width: 100%;#}
+{#            padding: 8px;#}
+{#            margin: 8px 0;#}
+{#            border: 1px solid #ccc;#}
+{#            border-radius: 4px;#}
+{#        }#}
+{##}
+{#        input[type="radio"] {#}
+{#            margin-right: 5px;#}
+{#        }#}
+{##}
+{#        input[type="submit"] {#}
+{#            background-color: #4CAF50;#}
+{#            color: white;#}
+{#            padding: 10px 20px;#}
+{#            border: none;#}
+{#            border-radius: 4px;#}
+{#            cursor: pointer;#}
+{#            width: 100%;#}
+{#            font-size: 16px;#}
+{#        }#}
+{##}
+{#        input[type="submit"]:hover {#}
+{#            background-color: #45a049;#}
+{#        }#}
+{##}
+{#        .form-section {#}
+{#            margin-bottom: 20px;#}
+{#        }#}
+{#    </style>#}
+{#</head>#}
+{##}
+{#<body>#}
+{#    <div class="container">#}
+{#        <h2>Add Staff</h2>#}
+{#        <form action="/Admin_add_staff_post" method="post" enctype="multipart/form-data" name="form1" id="form1">#}
+{#            <table>#}
+{#                <!-- Department Selection -->#}
+{#                <tr class="form-section">#}
+{#                    <td>Department</td>#}
+{#                    <td>#}
+{#                        <select name="select" required>#}
+{#                            {% for i in data %}#}
+{#                                <option value="{{ i.id }}">{{ i.departmentname }}</option>#}
+{#                            {% endfor %}#}
+{#                        </select>#}
+{#                    </td>#}
+{#                </tr>#}
+{##}
+{#                <!-- Staff Name -->#}
+{#                <tr class="form-section">#}
+{#                    <td>Staff Name</td>#}
+{#                    <td><input type="text" name="textfield" required /></td>#}
+{#                </tr>#}
+{##}
+{#                <!-- Phone Number -->#}
+{#                <tr class="form-section">#}
+{#                    <td>Phone Number</td>#}
+{#                    <td><input type="text" name="textfield2" required /></td>#}
+{#                </tr>#}
+{##}
+{#                <!-- Place -->#}
+{#                <tr class="form-section">#}
+{#                    <td>Place</td>#}
+{#                    <td><input type="text" name="textfield22" required /></td>#}
+{#                </tr>#}
+{##}
+{#                <!-- Post -->#}
+{#                <tr class="form-section">#}
+{#                    <td>Post</td>#}
+{#                    <td><input type="text" name="textfield23" required /></td>#}
+{#                </tr>#}
+{##}
+{#                <!-- PIN -->#}
+{#                <tr class="form-section">#}
+{#                    <td>PIN</td>#}
+{#                    <td><input type="text" name="textfield24" required /></td>#}
+{#                </tr>#}
+{##}
+{#                <!-- Email -->#}
+{#                <tr class="form-section">#}
+{#                    <td>Email</td>#}
+{#                    <td><input type="text" name="textfield242" required /></td>#}
+{#                </tr>#}
+{##}
+{#                <!-- Gender -->#}
+{#                <tr class="form-section">#}
+{#                    <td>Gender</td>#}
+{#                    <td>#}
+{#                        <input name="radiobutton" type="radio" value="MALE" required /> Male#}
+{#                        <input name="radiobutton" type="radio" value="FEMALE" required /> Female#}
+{#                    </td>#}
+{#                </tr>#}
+{##}
+{#                <!-- Image -->#}
+{#                <tr class="form-section">#}
+{#                    <td>Image</td>#}
+{#                    <td><input type="file" name="file" /></td>#}
+{#                </tr>#}
+{##}
+{#                <!-- Username -->#}
+{#                <tr class="form-section">#}
+{#                    <td>Username</td>#}
+{#                    <td><input type="text" name="txtuser" required /></td>#}
+{#                </tr>#}
+{##}
+{#                <!-- Password -->#}
+{#                <tr class="form-section">#}
+{#                    <td>Password</td>#}
+{#                    <td><input type="text" name="txtpwd" required /></td>#}
+{#                </tr>#}
+{##}
+{#                <!-- Submit Button -->#}
+{#                <tr>#}
+{#                    <td colspan="2">#}
+{#                        <div align="center">#}
+{#                            <input name="ADD" type="submit" id="ADD" value="Add Staff" />#}
+{#                        </div>#}
+{#                    </td>#}
+{#                </tr>#}
+{#            </table>#}
+{#        </form>#}
+{#    </div>#}
+{#</body>#}
+{#{% endblock %}#}
+
+{% extends 'ADMIN/index.html' %}
+
+{% block body %}
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>Add Staff</title>
+
+    <!-- Enhanced styling with light-orange theme -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fff9f0 0%, #ffead8 100%);
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            width: 70%;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(245, 130, 32, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, #ff9800, #f57c00);
+        }
+
+        h2 {
+            text-align: center;
+            color: #e65100;
+            margin-bottom: 25px;
+            font-weight: 600;
+            font-size: 24px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td {
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+            border-bottom: 1px solid #fff3e0;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        td:first-child {
+            width: 30%;
+            color: #f57c00;
+            font-weight: 500;
+        }
+
+        input[type="text"], input[type="file"], select {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 2px solid #ffe0b2;
+            border-radius: 6px;
+            background-color: #fffaf6;
+            color: #2c3e50;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23f57c00' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            padding-right: 30px;
+        }
+
+        input[type="text"]:focus, select:focus {
+            outline: none;
+            border-color: #ff9800;
+            box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.2);
+        }
+
+        input[type="radio"] {
+            margin-right: 8px;
+            accent-color: #f57c00;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            padding: 5px 0;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+        }
+
+        input[type="submit"] {
+            background: linear-gradient(90deg, #ff9800, #f57c00);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            margin-top: 15px;
+            box-shadow: 0 4px 10px rgba(255, 152, 0, 0.2);
+        }
+
+        input[type="submit"]:hover {
+            background: linear-gradient(90deg, #f57c00, #ff9800);
+            box-shadow: 0 6px 15px rgba(255, 152, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
+        input[type="submit"]:active {
+            transform: translateY(0);
+        }
+
+        /* Custom file input styling */
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input-wrapper input[type="file"] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-input-button {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #fff3e0;
+            color: #f57c00;
+            border: 1px solid #ffe0b2;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .file-input-wrapper:hover .file-input-button {
+            background-color: #ffe0b2;
+        }
+
+        .file-name {
+            margin-left: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Animation for form elements */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container * {
+            animation: fadeIn 0.5s ease forwards;
+        }
+    </style>
+
+    <!-- Script for file input display -->
+    <script type="text/javascript">
+        window.onload = function() {
+            const fileInput = document.querySelector('input[type="file"]');
+            const fileNameDisplay = document.getElementById('file-name-display');
+
+            fileInput.addEventListener('change', function() {
+                if(this.files && this.files.length > 0) {
+                    fileNameDisplay.textContent = this.files[0].name;
+                } else {
+                    fileNameDisplay.textContent = 'No file chosen';
+                }
+            });
+        };
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Add Staff</h2>
+        <form action="/Admin_add_staff_post" method="post" enctype="multipart/form-data" name="form1" id="form1">
+            {% csrf_token %}
+            <table>
+                <!-- Department Selection -->
+                <tr>
+                    <td>Department</td>
+                    <td>
+                        <select name="select" required>
+                            {% for i in data %}
+                                <option value="{{ i.id }}">{{ i.departmentname }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+
+                <!-- Staff Name -->
+                <tr>
+                    <td>Staff Name</td>
+                    <td><input type="text" name="textfield" required placeholder="Enter staff name" /></td>
+                </tr>
+
+                <!-- Phone Number -->
+                <tr>
+                    <td>Phone Number</td>
+                    <td><input type="text" name="textfield2" required placeholder="Enter phone number" /></td>
+                </tr>
+
+                <!-- Place -->
+                <tr>
+                    <td>Place</td>
+                    <td><input type="text" name="textfield22" required placeholder="Enter place" /></td>
+                </tr>
+
+                <!-- Post -->
+                <tr>
+                    <td>Post</td>
+                    <td><input type="text" name="textfield23" required placeholder="Enter post" /></td>
+                </tr>
+
+                <!-- PIN -->
+                <tr>
+                    <td>PIN</td>
+                    <td><input type="text" name="textfield24" required placeholder="Enter PIN code" /></td>
+                </tr>
+
+                <!-- Email -->
+                <tr>
+                    <td>Email</td>
+                    <td><input type="text" name="textfield242" required placeholder="Enter email address" /></td>
+                </tr>
+
+                <!-- Gender -->
+                <tr>
+                    <td>Gender</td>
+                    <td>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input name="radiobutton" type="radio" value="MALE" required />
+                                <label>Male</label>
+                            </div>
+                            <div class="radio-option">
+                                <input name="radiobutton" type="radio" value="FEMALE" required />
+                                <label>Female</label>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Image -->
+                <tr>
+                    <td>Image</td>
+                    <td>
+                        <div class="file-input-wrapper">
+                            <div class="file-input-button">Choose File</div>
+                            <input type="file" name="file" />
+                            <span id="file-name-display" class="file-name">No file chosen</span>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Username -->
+                <tr>
+                    <td>Username</td>
+                    <td><input type="text" name="txtuser" required placeholder="Create username" /></td>
+                </tr>
+
+                <!-- Password -->
+                <tr>
+                    <td>Password</td>
+                    <td><input type="text" name="txtpwd" required placeholder="Create password" /></td>
+                </tr>
+
+                <!-- Submit Button -->
+                <tr>
+                    <td colspan="2">
+                        <div align="center">
+                            <input name="ADD" type="submit" id="ADD" value="Add Staff" />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+{% endblock %}

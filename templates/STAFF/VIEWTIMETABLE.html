@@ -1,0 +1,151 @@
+{% extends 'STAFF/index.html' %}
+
+{% block body %}
+  <!-- Custom styles for this page only -->
+  <style>
+    body {
+      background-color: #f0f5ff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+    }
+
+    .custom-container {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(13, 71, 161, 0.15);
+      border-top: 5px solid #1976d2;
+    }
+
+    .page-title {
+      color: #0d47a1;
+      text-align: center;
+      margin-bottom: 25px;
+      font-weight: 600;
+      font-size: 28px;
+    }
+
+    .blue-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(13, 71, 161, 0.1);
+    }
+
+    .blue-table thead {
+      background: linear-gradient(135deg, #1976d2, #0d47a1);
+    }
+
+    .blue-table th {
+      color: white;
+      padding: 15px;
+      text-align: left;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      border: none;
+    }
+
+    .blue-table td {
+      padding: 14px 15px;
+      vertical-align: middle;
+      border-top: 1px solid #e3f2fd;
+      color: #0d47a1;
+      font-size: 15px;
+    }
+
+    .blue-table tbody tr:nth-child(odd) {
+      background-color: #f5f9ff;
+    }
+
+    .blue-table tbody tr:nth-child(even) {
+      background-color: #e3f2fd;
+    }
+
+    .blue-table tbody tr:hover {
+      background-color: #bbdefb;
+      transition: background-color 0.3s ease;
+    }
+
+    .day-badge {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      background-color: #1976d2;
+      color: white;
+      min-width: 80px;
+      text-align: center;
+    }
+
+    .hour-badge {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      background-color: #e3f2fd;
+      color: #0d47a1;
+      border: 1px solid #90caf9;
+      min-width: 60px;
+      text-align: center;
+    }
+
+    .class-badge {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      background-color: #bbdefb;
+      color: #0d47a1;
+      border: 1px solid #64b5f6;
+      min-width: 60px;
+      text-align: center;
+    }
+
+    .no-data-message {
+      text-align: center;
+      padding: 20px;
+      color: #6c757d;
+      font-style: italic;
+    }
+  </style>
+
+  <div class="custom-container">
+    <h2 class="page-title">Class Schedule</h2>
+
+    <form id="form1" name="form1" method="post" action="">
+      <div class="table-responsive">
+        <table class="blue-table">
+          <thead>
+            <tr>
+              <th width="20%">Day</th>
+              <th width="15%">Hour</th>
+              <th width="40%">Subject</th>
+              <th width="25%">Class</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in data %}
+              <tr>
+                <td><span class="day-badge">{{ i.day }}</span></td>
+                <td><span class="hour-badge">{{ i.hour }}</span></td>
+                <td>{{ i.SUBJECT.subjectname }}</td>
+                <td><span class="class-badge">{{ i.cls }}</span></td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="4" class="no-data-message">No schedule entries found.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </form>
+  </div>
+{% endblock %}

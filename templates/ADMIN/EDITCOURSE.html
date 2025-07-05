@@ -1,0 +1,205 @@
+{#{% extends 'ADMIN/index.html' %}#}
+{#{% block body %}#}
+{#<head>#}
+{#    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#    <title>Edit Course</title>#}
+{#    <style>#}
+{#        body {#}
+{#            font-family: Arial, sans-serif;#}
+{#            background-color: #f4f4f4;#}
+{#            margin: 0;#}
+{#            padding: 0;#}
+{#        }#}
+{##}
+{#        .container {#}
+{#            width: 60%;#}
+{#            margin: 50px auto;#}
+{#            background-color: #fff;#}
+{#            padding: 20px;#}
+{#            border-radius: 8px;#}
+{#            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);#}
+{#        }#}
+{##}
+{#        h1 {#}
+{#            text-align: center;#}
+{#            margin-bottom: 30px;#}
+{#            color: #333;#}
+{#        }#}
+{##}
+{#        table {#}
+{#            width: 100%;#}
+{#            border-collapse: collapse;#}
+{#        }#}
+{##}
+{#        td {#}
+{#            padding: 12px;#}
+{#            text-align: left;#}
+{#        }#}
+{##}
+{#        label {#}
+{#            font-size: 16px;#}
+{#            color: #333;#}
+{#        }#}
+{##}
+{#        select, input[type="text"], input[type="submit"] {#}
+{#            width: 100%;#}
+{#            padding: 10px;#}
+{#            font-size: 16px;#}
+{#            margin-top: 5px;#}
+{#            border: 1px solid #ddd;#}
+{#            border-radius: 4px;#}
+{#        }#}
+{##}
+{#        input[type="submit"] {#}
+{#            width: auto;#}
+{#            background-color: #007bff;#}
+{#            color: white;#}
+{#            cursor: pointer;#}
+{#            font-weight: bold;#}
+{#            margin-top: 20px;#}
+{#        }#}
+{##}
+{#        input[type="submit"]:hover {#}
+{#            background-color: #0056b3;#}
+{#        }#}
+{##}
+{#        .center-text {#}
+{#            text-align: center;#}
+{#        }#}
+{##}
+{#        .form-row {#}
+{#            margin-bottom: 20px;#}
+{#        }#}
+{##}
+{#        .form-row:last-child {#}
+{#            margin-bottom: 0;#}
+{#        }#}
+{#    </style>#}
+{#</head>#}
+{##}
+{#<body>#}
+{#    <div class="container">#}
+{#        <h1>Edit Course</h1>#}
+{#        <form id="form1" name="form1" method="post" action="/edit_course_post">#}
+{#            <div class="form-row">#}
+{#                <label for="department">Department</label>#}
+{#                <select name="select" id="department">#}
+{#                    <option value="">Select</option>#}
+{#                    {% for dept in data %}#}
+{#                        <option value="{{ dept.id }}" {% if dept.id == courses.DEPARTMENT_id %} selected {% endif %}>{{ dept.departmentname }}</option>#}
+{#                    {% endfor %}#}
+{#                </select>#}
+{#            </div>#}
+{##}
+{#            <div class="form-row">#}
+{#                <label for="course">Course Name</label>#}
+{#                <input type="text" id="course" name="textfield" value="{{ courses.coursename }}" />#}
+{#            </div>#}
+{##}
+{#            <div class="center-text">#}
+{#                <input type="submit" name="Submit" value="Update Course" />#}
+{#            </div>#}
+{#        </form>#}
+{#    </div>#}
+{#</body>#}
+{##}
+{#{% endblock %}#}
+
+{% extends 'ADMIN/index.html' %}
+{% block body %}
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Edit Course</title>
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background-color: #fff3e0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            width: 60%;
+            margin: 50px auto;
+            background: linear-gradient(135deg, #ffcc80, #ffb74d);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            color: #5d4037;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #6d4c41;
+        }
+
+        label {
+            font-size: 16px;
+            color: #5d4037;
+            font-weight: bold;
+        }
+
+        select, input[type="text"], input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 5px;
+            border: 1px solid #ff9800;
+            border-radius: 6px;
+            background-color: #fff;
+        }
+
+        input[type="submit"] {
+            width: auto;
+            background-color: #2e7d32;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #1b5e20;
+        }
+
+        .center-text {
+            text-align: center;
+        }
+
+        .form-row {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Edit Course</h1>
+        <form id="form1" name="form1" method="post" action="/edit_course_post">
+            <div class="form-row">
+                <label for="department">Department</label>
+                <select name="select" id="department">
+                    <option value="">Select</option>
+                    {% for dept in data %}
+                        <option value="{{ dept.id }}" {% if dept.id == courses.DEPARTMENT_id %} selected {% endif %}>{{ dept.departmentname }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-row">
+                <label for="course">Course Name</label>
+                <input type="text" id="course" name="textfield" value="{{ courses.coursename }}" />
+            </div>
+
+            <div class="center-text">
+                <input type="submit" name="Submit" value="Update Course" />
+            </div>
+        </form>
+    </div>
+</body>
+
+{% endblock %}

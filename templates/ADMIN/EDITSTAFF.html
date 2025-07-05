@@ -1,0 +1,377 @@
+{#{% extends 'ADMIN/index.html' %}#}
+{#{% block body %}#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />#}
+{#<title>Edit Staff</title>#}
+{##}
+{#<!-- Adding some CSS to style the form -->#}
+{#<style>#}
+{#  body {#}
+{#    font-family: Arial, sans-serif;#}
+{#    background-color: #f7f7f7;#}
+{#    padding: 50px;#}
+{#  }#}
+{##}
+{#  .form-container {#}
+{#    width: 70%;#}
+{#    max-width: 800px;#}
+{#    margin: 0 auto;#}
+{#    padding: 20px;#}
+{#    background-color: #fff;#}
+{#    border-radius: 10px;#}
+{#    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);#}
+{#  }#}
+{##}
+{#  .form-container table {#}
+{#    width: 100%;#}
+{#  }#}
+{##}
+{#  .form-container td {#}
+{#    padding: 10px;#}
+{#    text-align: left;#}
+{#  }#}
+{##}
+{#  .form-container input[type="text"],#}
+{#  .form-container select,#}
+{#  .form-container input[type="file"] {#}
+{#    width: 100%;#}
+{#    padding: 8px;#}
+{#    margin: 5px 0;#}
+{#    border-radius: 4px;#}
+{#    border: 1px solid #ccc;#}
+{#  }#}
+{##}
+{#  .form-container input[type="submit"] {#}
+{#    width: 100%;#}
+{#    padding: 10px;#}
+{#    background-color: #007bff;#}
+{#    color: #fff;#}
+{#    border: none;#}
+{#    border-radius: 4px;#}
+{#    cursor: pointer;#}
+{#  }#}
+{##}
+{#  .form-container input[type="submit"]:hover {#}
+{#    background-color: #0056b3;#}
+{#  }#}
+{##}
+{#  .error-message {#}
+{#    color: red;#}
+{#    text-align: center;#}
+{#    margin-bottom: 10px;#}
+{#  }#}
+{##}
+{#  .success-message {#}
+{#    color: green;#}
+{#    text-align: center;#}
+{#    margin-bottom: 10px;#}
+{#  }#}
+{##}
+{#  .form-container img {#}
+{#    margin-top: 10px;#}
+{#    max-width: 200px;#}
+{#    max-height: 200px;#}
+{#  }#}
+{##}
+{#  .form-container label {#}
+{#    font-size: 14px;#}
+{#  }#}
+{##}
+{#</style>#}
+{##}
+{#</head>#}
+{##}
+{#<body>#}
+{##}
+{#<div class="form-container">#}
+{#  <!-- Display feedback messages -->#}
+{#  <div id="message" class="error-message"></div>#}
+{##}
+{#  <form action="/edit_staff_post" method="post" enctype="multipart/form-data" name="form1" id="form1">#}
+{#    {% csrf_token %}#}
+{#    <table width="100%" border="1">#}
+{##}
+{#      <tr>#}
+{#        <td>DEPARTMENT</td>#}
+{#        <td>#}
+{#          <select name="select" id="dep">#}
+{#            <option selected value="{{ staff.DEPARTMENT.id }}">{{ staff.DEPARTMENT.departmentname }}</option>#}
+{#            {% for i in data %}#}
+{#              <option value="{{ i.id }}" >{{ i.departmentname }}</option>#}
+{#            {% endfor %}#}
+{#          </select>#}
+{#        </td>#}
+{#      </tr>#}
+{##}
+{#      <tr>#}
+{#        <td>STAFF NAME</td>#}
+{#        <td><input type="text" name="textfield" value="{{ staff.staffname }}" required /></td>#}
+{#      </tr>#}
+{##}
+{#      <tr>#}
+{#        <td>PHONENUMBER</td>#}
+{#        <td><input type="text" name="textfield2" value="{{ staff.phonenumber }}" required /></td>#}
+{#      </tr>#}
+{##}
+{#      <tr>#}
+{#        <td>PLACE</td>#}
+{#        <td><input type="text" name="textfield22" value="{{ staff.place }}" required /></td>#}
+{#      </tr>#}
+{##}
+{#      <tr>#}
+{#        <td>POST</td>#}
+{#        <td><input type="text" name="textfield23" value="{{ staff.post }}" required /></td>#}
+{#      </tr>#}
+{##}
+{#      <tr>#}
+{#        <td>PIN</td>#}
+{#        <td><input type="text" name="textfield24" value="{{ staff.pin }}" required /></td>#}
+{#      </tr>#}
+{##}
+{#      <tr>#}
+{#        <td>EMAIL</td>#}
+{#        <td><input type="text" name="textfield242" value="{{ staff.email }}" required /></td>#}
+{#      </tr>#}
+{##}
+{#      <tr>#}
+{#        <td>GENDER</td>#}
+{#        <td>#}
+{#          <label>#}
+{#            <input name="radiobutton" type="radio" value="MALE" {% if staff.gender == 'MALE' %} checked {% endif %}/> MALE#}
+{#            <input name="radiobutton" type="radio" value="FEMALE" {% if staff.gender == 'FEMALE' %} checked {% endif %}/> FEMALE#}
+{#          </label>#}
+{#        </td>#}
+{#      </tr>#}
+{##}
+{#      <tr>#}
+{#        <td>IMAGE</td>#}
+{#        <td>#}
+{#          <input type="file" name="file" />#}
+{#          <img src="{{ staff.image.url }}" alt="Staff Image">#}
+{#        </td>#}
+{#      </tr>#}
+{##}
+{#      <tr>#}
+{#        <td colspan="2">#}
+{#          <div align="center">#}
+{#            <input name="ADD" type="submit" id="ADD" value="Update" />#}
+{#          </div>#}
+{#        </td>#}
+{#      </tr>#}
+{##}
+{#    </table>#}
+{#  </form>#}
+{#</div>#}
+{##}
+{#<!-- JavaScript for form validation and dynamic department dropdown -->#}
+{#<script type="text/javascript">#}
+{#  // Function to validate form before submission#}
+{#  function validateForm() {#}
+{#    var staffName = document.forms["form1"]["textfield"].value;#}
+{#    var phoneNumber = document.forms["form1"]["textfield2"].value;#}
+{#    var place = document.forms["form1"]["textfield22"].value;#}
+{#    var post = document.forms["form1"]["textfield23"].value;#}
+{#    var pin = document.forms["form1"]["textfield24"].value;#}
+{#    var email = document.forms["form1"]["textfield242"].value;#}
+{#    var messageDiv = document.getElementById("message");#}
+{##}
+{#    messageDiv.innerHTML = ""; // Clear previous messages#}
+{##}
+{#    // Check if all required fields are filled#}
+{#    if (!staffName || !phoneNumber || !place || !post || !pin || !email) {#}
+{#      messageDiv.innerHTML = "Please fill in all the fields.";#}
+{#      messageDiv.classList.add("error-message");#}
+{#      return false;#}
+{#    }#}
+{#    return true; // Allow form submission if valid#}
+{#  }#}
+{##}
+{#  // On form submit, validate fields#}
+{#  document.getElementById("form1").onsubmit = function() {#}
+{#    return validateForm();#}
+{#  };#}
+{#</script>#}
+{##}
+{#</body>#}
+{#{% endblock %}#}
+
+{% extends 'ADMIN/index.html' %}
+{% block body %}
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Edit Staff</title>
+
+<!-- Stylish CSS with Light Orange Theme -->
+<style>
+  body {
+    font-family: "Poppins", sans-serif;
+    background-color: #fff3e0;
+    padding: 50px;
+  }
+
+  .form-container {
+    width: 70%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: linear-gradient(135deg, #ffcc80, #ffb74d);
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    color: #5d4037;
+  }
+
+  .form-container table {
+    width: 100%;
+  }
+
+  .form-container td {
+    padding: 12px;
+    font-weight: bold;
+  }
+
+  .form-container input[type="text"],
+  .form-container select,
+  .form-container input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 6px;
+    border: 1px solid #ff9800;
+    background-color: #fff;
+  }
+
+  .form-container input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #e65100;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s ease;
+  }
+
+  .form-container input[type="submit"]:hover {
+    background-color: #bf360c;
+  }
+
+  .error-message {
+    color: red;
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  .form-container img {
+    margin-top: 10px;
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .form-container label {
+    font-size: 15px;
+  }
+</style>
+</head>
+
+<body>
+<div class="form-container">
+  <div id="message" class="error-message"></div>
+
+  <form action="/edit_staff_post" method="post" enctype="multipart/form-data" name="form1" id="form1">
+    {% csrf_token %}
+    <table>
+      <tr>
+        <td>DEPARTMENT</td>
+        <td>
+          <select name="select" id="dep">
+            <option selected value="{{ staff.DEPARTMENT.id }}">{{ staff.DEPARTMENT.departmentname }}</option>
+            {% for i in data %}
+              <option value="{{ i.id }}">{{ i.departmentname }}</option>
+            {% endfor %}
+          </select>
+        </td>
+      </tr>
+
+      <tr>
+        <td>STAFF NAME</td>
+        <td><input type="text" name="textfield" value="{{ staff.staffname }}" required /></td>
+      </tr>
+
+      <tr>
+        <td>PHONE NUMBER</td>
+        <td><input type="text" name="textfield2" value="{{ staff.phonenumber }}" required /></td>
+      </tr>
+
+      <tr>
+        <td>PLACE</td>
+        <td><input type="text" name="textfield22" value="{{ staff.place }}" required /></td>
+      </tr>
+
+      <tr>
+        <td>POST</td>
+        <td><input type="text" name="textfield23" value="{{ staff.post }}" required /></td>
+      </tr>
+
+      <tr>
+        <td>PIN</td>
+        <td><input type="text" name="textfield24" value="{{ staff.pin }}" required /></td>
+      </tr>
+
+      <tr>
+        <td>EMAIL</td>
+        <td><input type="text" name="textfield242" value="{{ staff.email }}" required /></td>
+      </tr>
+
+      <tr>
+        <td>GENDER</td>
+        <td>
+          <label>
+            <input name="radiobutton" type="radio" value="MALE" {% if staff.gender == 'MALE' %} checked {% endif %}/> MALE
+            <input name="radiobutton" type="radio" value="FEMALE" {% if staff.gender == 'FEMALE' %} checked {% endif %}/> FEMALE
+          </label>
+        </td>
+      </tr>
+
+      <tr>
+        <td>IMAGE</td>
+        <td>
+          <input type="file" name="file" />
+          <img src="{{ staff.image.url }}" alt="Staff Image">
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2" style="text-align: center;">
+          <input name="ADD" type="submit" id="ADD" value="Update" />
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+
+<script>
+  function validateForm() {
+    var requiredFields = ["textfield", "textfield2", "textfield22", "textfield23", "textfield24", "textfield242"];
+    var messageDiv = document.getElementById("message");
+    messageDiv.innerHTML = "";
+
+    for (var i = 0; i < requiredFields.length; i++) {
+      var field = document.forms["form1"][requiredFields[i]].value;
+      if (!field) {
+        messageDiv.innerHTML = "Please fill in all fields.";
+        return false;
+      }
+    }
+    return true;
+  }
+
+  document.getElementById("form1").onsubmit = function() {
+    return validateForm();
+  };
+</script>
+</body>
+{% endblock %}

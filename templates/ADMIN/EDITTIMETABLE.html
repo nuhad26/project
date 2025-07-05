@@ -1,0 +1,133 @@
+{% extends 'ADMIN/index.html' %}
+{% block body %}
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Edit Timetable</title>
+
+<!-- Add custom styles to improve the form's look -->
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fc;
+    padding: 50px 20px;
+  }
+
+  .form-container {
+    width: 80%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+
+  .form-container td {
+    padding: 12px;
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  .form-container select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+
+  .form-container select:focus {
+    border-color: #007bff;
+  }
+
+  .form-container input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .form-container input[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+
+  @media (max-width: 600px) {
+    .form-container {
+      width: 100%;
+      padding: 15px;
+    }
+  }
+</style>
+
+</head>
+
+<body>
+
+<div class="form-container">
+  <form id="form1" name="form1" method="post" action="/edit_timetable_post">
+    {% csrf_token %}
+    <table>
+      <tr>
+        <td>HOUR</td>
+        <td>
+          <select name="select" required>
+            <option value="1">1st Hour</option>
+            <option value="2">2nd Hour</option>
+            <option value="3">3rd Hour</option>
+            <option value="4">4th Hour</option>
+            <option value="5">5th Hour</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>DAY</td>
+        <td>
+          <select name="DAY" required>
+            <option value="MONDAY">Monday</option>
+            <option value="TUESDAY">Tuesday</option>
+            <option value="WEDNESDAY">Wednesday</option>
+            <option value="THURSDAY">Thursday</option>
+            <option value="FRIDAY">Friday</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>SUBJECT</td>
+        <td>
+          <select name="select3" required>
+            {% for i in sub %}
+              <option value="{{ i.id }}">{{ i.subjectname }}</option>
+            {% endfor %}
+          </select>
+        </td>
+      </tr>
+    <tr>
+  <td>CLASS</td>
+  <td>
+            <input type="text" name="cls" placeholder="Enter Class" />
+       {% for i in cls %}
+              <option value="{{ i.id }}">{{ i.cls }}</option>
+            {% endfor %}
+          </td>
+</tr>
+      <tr>
+        <td colspan="2" style="text-align: center;">
+          <input name="EDIT" type="submit" id="EDIT" value="EDIT" />
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+
+</body>
+{% endblock %}

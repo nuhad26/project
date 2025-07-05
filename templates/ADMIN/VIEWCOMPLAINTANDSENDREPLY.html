@@ -1,0 +1,98 @@
+{% extends 'ADMIN/index.html' %}
+{% block body %}
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>Complaints</title>
+
+  <!-- Adding styles to improve the layout -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      padding: 30px;
+    }
+
+    .complaint-table-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    td, th {
+      padding: 12px;
+      text-align: left;
+      vertical-align: middle;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .action-column {
+      width: 120px;
+      text-align: center;
+    }
+
+    .no-reply {
+      color: red;
+    }
+
+    .responded {
+      color: green;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="complaint-table-container">
+    <form id="form1" name="form1" method="post" action="">
+      <table>
+        <thead>
+          <tr>
+            <th>NAME</th>
+            <th>COURSE</th>
+            <th>DATE</th>
+            <th>COMPLAINT</th>
+            <th>REPLY</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in data %}
+          <tr>
+            <td>{{ i.STUDENT.studentname }}</td>
+            <td>{{ i.STUDENT.COURSE.coursename }}</td>
+            <td>{{ i.date }}</td>
+            <td>{{ i.complaints }}</td>
+            <td class="action-column">
+              {% if i.reply == 'pending' %}
+              <a href="/send_reply/{{ i.id }}" class="no-reply">REPLY</a>
+              {% else %}
+              <span class="responded">{{ i.reply }}</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </form>
+  </div>
+</body>
+{% endblock %}

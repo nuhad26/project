@@ -1,0 +1,181 @@
+{% extends 'STAFF/index.html' %}
+{% block body %}
+  <!-- Custom styles for this page only -->
+  <style>
+    body {
+      background-color: #f0f5ff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+    }
+
+    .form-container {
+      max-width: 650px;
+      margin: 20px auto;
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(13, 71, 161, 0.15);
+      border-top: 5px solid #1976d2;
+    }
+
+    h2 {
+      color: #0d47a1;
+      text-align: center;
+      margin-bottom: 25px;
+      font-weight: 600;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    td {
+      padding: 15px;
+      font-size: 15px;
+      text-align: left;
+      vertical-align: middle;
+      border: none;
+    }
+
+    td:first-child {
+      color: #1565c0;
+      font-weight: 600;
+      width: 30%;
+    }
+
+    select, input[type="file"] {
+      width: 100%;
+      padding: 12px;
+      margin: 5px 0;
+      border-radius: 6px;
+      border: 1px solid #bbdefb;
+      background-color: #e3f2fd;
+      color: #0d47a1;
+      transition: all 0.3s ease;
+    }
+
+    select:focus, input[type="file"]:focus {
+      outline: none;
+      border-color: #1976d2;
+      box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+    }
+
+    input[type="submit"] {
+      background: linear-gradient(135deg, #1976d2, #0d47a1);
+      color: white;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      width: 180px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(13, 71, 161, 0.2);
+    }
+
+    input[type="submit"]:hover {
+      background: linear-gradient(135deg, #1565c0, #0a3d91);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(13, 71, 161, 0.3);
+    }
+
+    .file-input-container {
+      position: relative;
+      overflow: hidden;
+      padding: 10px;
+      background-color: #e3f2fd;
+      border: 2px dashed #90caf9;
+      border-radius: 8px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .file-input-container:hover {
+      background-color: #bbdefb;
+      border-color: #1976d2;
+    }
+
+    .file-input-label {
+      display: block;
+      padding: 10px;
+      color: #1565c0;
+      cursor: pointer;
+    }
+
+    input[type="file"] {
+      opacity: 0.8;
+    }
+
+    .section-title {
+      background-color: #bbdefb;
+      padding: 8px 15px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .preview-image {
+      display: block;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: 3px solid #bbdefb;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+
+  <div class="form-container">
+    <h2>Edit Study Material</h2>
+    <form id="form1" name="form1" method="post" enctype="multipart/form-data" action="/edit_studymaterial_post">
+      <table>
+        <tr>
+          <td><div class="section-title">Semester</div></td>
+          <td>
+            <select name="select2">
+              <option value="1" {% if data.sem == '1' %} selected{% endif %}>Semester 1</option>
+              <option value="2" {% if data.sem == '2' %} selected{% endif %}>Semester 2</option>
+              <option value="3" {% if data.sem == '3' %} selected{% endif %}>Semester 3</option>
+              <option value="4" {% if data.sem == '4' %} selected{% endif %}>Semester 4</option>
+              <option value="5" {% if data.sem == '5' %} selected{% endif %}>Semester 5</option>
+              <option value="6" {% if data.sem == '6' %} selected{% endif %}>Semester 6</option>
+              <option value="7" {% if data.sem == '7' %} selected{% endif %}>Semester 7</option>
+              <option value="8" {% if data.sem == '8' %} selected{% endif %}>Semester 8</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="section-title">Subject</div></td>
+          <td>
+            <select name="select3">
+              {% for i in value %}
+                <option value="{{ i.id }}">{{ i.subjectname }}</option>
+              {% endfor %}
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="section-title">Material</div></td>
+          <td>
+            <img src="{{ data.file.url }}" height="150" width="150" class="preview-image" alt="Current file preview">
+            <div class="file-input-container">
+              <label class="file-input-label">
+                <input type="file" name="file" />
+                <span>Choose a new file to replace current material</span>
+              </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <div align="center" style="margin-top: 20px;">
+              <input name="EDIT" type="submit" id="EDIT" value="Update Material" />
+            </div>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </div>
+{% endblock %}

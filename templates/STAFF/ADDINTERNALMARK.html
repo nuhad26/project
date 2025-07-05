@@ -1,0 +1,190 @@
+{% extends 'STAFF/index.html' %}
+{% block body %}
+    <head>
+  <!-- Custom styles for this page only -->
+  <style>
+    body {
+      background-color: #f0f5ff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+    }
+
+    .form-container {
+      max-width: 550px;
+      margin: 40px auto;
+      padding: 30px;
+      background: linear-gradient(145deg, #ffffff, #f0f8ff);
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(12, 80, 184, 0.15);
+      border-top: 4px solid #3366cc;
+    }
+
+    .form-title {
+      color: #1a4b8c;
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    td {
+      padding: 12px 15px;
+      font-size: 15px;
+      color: #2c5282;
+      vertical-align: top;
+    }
+
+    td:first-child {
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    select, input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin: 5px 0;
+      border-radius: 6px;
+      border: 1px solid #c4d3f6;
+      background-color: #f7faff;
+      font-family: inherit;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    select:focus, input[type="text"]:focus {
+      outline: none;
+      border-color: #5b8ad4;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+
+    input[type="submit"] {
+      background: linear-gradient(to right, #3366cc, #5b8ad4);
+      color: white;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      width: auto;
+      box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11);
+    }
+
+    input[type="submit"]:hover {
+      background: linear-gradient(to right, #274f99, #4a76c4);
+      transform: translateY(-2px);
+      box-shadow: 0 7px 14px rgba(50, 50, 93, 0.15);
+    }
+
+    input[type="submit"]:active {
+      transform: translateY(1px);
+    }
+
+    .form-row {
+      position: relative;
+      margin-bottom: 5px;
+    }
+
+    .icon-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon-label::before {
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      color: #3366cc;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-container {
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+  </style>
+</head>
+
+  <div class="form-container">
+    <h2 class="form-title">Student Internal Mark Entry</h2>
+    <form id="form1" name="form1" method="post" action="/add_internalmark_post">
+      <table>
+        <tr>
+          <td>
+            <div class="icon-label">SEM</div>
+          </td>
+          <td>
+            <div class="form-row">
+              <select name="select2" class="blue-select">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+              </select>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="icon-label">STUDENT NAME</div>
+          </td>
+          <td>
+            <div class="form-row">
+              <select name="select23" class="blue-select">
+                {% for i in DATA %}
+                  <option value="{{ i.id }}">{{ i.studentname }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="icon-label">SUBJECT</div>
+          </td>
+          <td>
+            <div class="form-row">
+              <select name="select4" class="blue-select">
+                {% for i in dataa %}
+                  <option value="{{ i.id }}">{{ i.subjectname }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="icon-label">INTERNAL MARK</div>
+          </td>
+          <td>
+            <div class="form-row">
+              <input type="text" name="textfield" placeholder="Enter mark" />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <div align="center" style="margin-top: 15px;">
+              <input name="ADD" type="submit" id="ADD" value="ADD" />
+            </div>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </div>
+{% endblock %}
